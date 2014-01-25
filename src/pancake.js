@@ -5,6 +5,39 @@
     }
     var pancake = toApplyTo[name] = {};
 
+    pancake.Speech = function() {
+        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+        if (!window.SpeechRecognition) {
+            throw new Error("Speech Recognition not available.");
+        }
+        var handler = null;
+        
+        this.handler = function(val) { if (val) handler = val; else return handler; };
+        
+        var recognition = new window.SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.onresult = function(event) {
+            var results = event.results;
+            var result = results[0][0].transcript;
+            if (handler)
+                handler(result);
+        };
+        
+        this.error = function(val) {
+            recognition.onerror = val;
+        };
+        
+        this.start = function(val) {
+            recognition.onstart = val;
+            recognition.start();
+        };
+        this.stop = function(val) {
+            recognition.onstop = val;
+            recognition.stop();  
+        };
+    };
+
     pancake.Effects = function (element) {
         this.fadeIn = function (time) {
             element.fadeIn(time);
@@ -79,7 +112,7 @@
             return "Chrome";
         } else if (navigator.userAgent.indexOf("Firefox") !== -1) {
             return "Firefox";
-        } else if (navigator.userAgent.indexOf("MSIE") !== -1) {
+        } else if (navigator.userAgent.indexOf("MSIE") !== -1 || navigator.userAgent.indexOf("Trident") != -1) {
             return "IE";
         } else {
             return "Unknown";
@@ -101,5 +134,9 @@
     /* jQuery Integration */
     window.jQuery.fn.effects = function () {
         return new pancake.Effects(this);
+    };
+    
+    pancake.speech = function() {
+        return new pancake.Speech();
     };
 })(window, "pancake");

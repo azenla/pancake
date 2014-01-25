@@ -7,7 +7,16 @@
   <body>
     <h1 class="header">Pancake Speech</h1>
     
+    <p id="result"></p>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="../src/pancake.js"></script>
+    <script>
+        var speech = pancake.speech();
+        speech.handler(function(text) {
+            $("#result").html(text);
+        });
+        speech.start();
+    </script>
   </body>
 </html>
