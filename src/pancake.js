@@ -12,8 +12,10 @@
       var handler = null;
 
       this.handler = function (val) {
-         if (val) handler = val;
-         else return handler;
+         if (val)
+            handler = val;
+         else
+            return handler;
       };
 
       var recognition = new window.SpeechRecognition();
@@ -137,5 +139,13 @@
    /* Shortcut to new pancake.Speech() */
    pancake.speech = function () {
       return new pancake.Speech();
+   };
+
+   pancake.playAudio = function(url) {
+      var audio = new Audio();
+      audio.setAttribute("src", url);
+      audio.setAttribute("controls", "");
+      audio.play();
+      return $(audio);
    };
 })(window, "pancake");

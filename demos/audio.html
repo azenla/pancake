@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pancake Audio</title>
+
+    <style>
+      #audio {
+        display: flex;
+        flex-direction: column;
+        line-height: 20px;
+      }
+      #audio audio {
+        padding-top: 20px;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <h1>Pancake Audio</h1>
+
+    <form id="form">
+      URL: <input type="text" id="url" name="url">
+      <input type="submit">
+    </form>
+    
+    <br/>
+
+    <div id="audio"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="../src/pancake.js"></script>
+    
+    <script>
+        var $url = $("#url");
+        $("#form").submit(function(event) {
+          var e = pancake.playAudio($url.val());
+          e.controls = "";
+          $("#audio").append(e);
+          event.preventDefault();
+        });
+    </script>
+  </body>
+</html>
