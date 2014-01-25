@@ -1,0 +1,26 @@
+{
+  "name": "pancakejs",
+  "version": "0.1.0",
+  "description": "Pancake JavaScript Utility Library",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kaendfinger/pancake.git"
+  },
+  "keywords": [
+    "Pancake",
+    "Utilities"
+  ],
+  "author": "Kenneth Endfinger",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/kaendfinger/pancake/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}

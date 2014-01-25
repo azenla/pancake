@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pancake Detection</title>
+  </head>
+  
+  <body>
+    <h1 style="display: inline-block;">Pancake Detection</h1>
+    
+    <div id="browser"></div>
+    <div id="vendor"></div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="../src/pancake.js"></script>
+    
+    <script>
+        var $browser = $("#browser");
+        var $vendor = $("#vendor");
+        $browser.html(("Browser".bold() + ": " + pancake.browser()).big());
+        $vendor.html(("Vendor".bold() + ": " + pancake.userAgent().vendor).big());
+        $("h1").hover(function() {
+            $(this).effects().rotate(360);
+        });
+    </script>
+  </body>
+</html>
