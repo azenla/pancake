@@ -6,7 +6,7 @@ module.exports = function(grunt) {
         // Task configuration.
         jshint: {
             options: {
-                curly: true,
+                curly: false,
                 eqeqeq: true,
                 immed: true,
                 latedef: true,
