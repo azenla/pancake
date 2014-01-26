@@ -1,16 +1,16 @@
-(function (toApplyTo, name) {
+(function(toApplyTo, name) {
    "use strict";
    if (!("jQuery" in window))
-      throw new Error("pancakejs requires jQuery.");
+      throw new Error("Pancake requires jQuery.");
    var pancake = toApplyTo[name] = {};
 
-   pancake.Speech = function () {
+   pancake.Speech = function() {
       window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
       if (!window.SpeechRecognition)
          throw new Error("Speech Recognition not available.");
       var handler = null;
 
-      this.handler = function (val) {
+      this.handler = function(val) {
          if (val)
             handler = val;
          else
@@ -20,22 +20,22 @@
       var recognition = new window.SpeechRecognition();
       recognition.continuous = true;
       recognition.interimResults = true;
-      recognition.onresult = function (event) {
+      recognition.onresult = function(event) {
          var results = event.results;
          var result = results[0][0].transcript;
          if (handler)
             handler(result);
       };
 
-      this.error = function (val) {
+      this.error = function(val) {
          recognition.onerror = val;
       };
 
-      this.start = function (val) {
+      this.start = function(val) {
          recognition.onstart = val;
          recognition.start();
       };
-      this.stop = function (val) {
+      this.stop = function(val) {
          recognition.onstop = val;
          recognition.stop();
       };
@@ -43,11 +43,11 @@
 
    /* Effects Access */
    pancake.applyEffects = function(obj) {
-      obj.rotate = function (degrees) {
+      obj.rotate = function(degrees) {
          var e = $(this);
          e.css("transition", "all 1s");
          e.css("transform", "rotateY(" + degrees + "deg)");
-         setTimeout(function () {
+         setTimeout(function() {
             e.css("transform", "");
          }, 1000);
       };
@@ -73,7 +73,7 @@
       };
    };
 
-   pancake.speak = function (text, options) {
+   pancake.speak = function(text, options) {
       if (!("speechSynthesis" in window)) {
          throw new Error("Speech Syntehesis not Supported");
       }
@@ -90,11 +90,11 @@
    };
 
    /* Get Current Time */
-   pancake.time = function () {
+   pancake.time = function() {
       return new Date().getTime();
    };
 
-   pancake.userAgent = function () {
+   pancake.userAgent = function() {
       var agent = navigator.userAgent;
       return {
          agent: agent,
@@ -106,7 +106,7 @@
    /**
     * Different Browsers have different ways to detect information.
     */
-   pancake.browser = function () {
+   pancake.browser = function() {
       if (navigator.userAgent.indexOf("Chrome/") !== -1 && navigator.vendor.indexOf("Google") !== -1)
          return "Chrome";
       else if (navigator.userAgent.indexOf("Firefox") !== -1)
@@ -122,7 +122,7 @@
    /**
     * Find all objects in an array that are considered true.
     */
-   pancake.findAll = function (a) {
+   pancake.findAll = function(a) {
       var all = [];
       for (var i = 0; i < a.length; i++) {
          if (a[i])
@@ -134,7 +134,7 @@
    pancake.applyEffects(window.jQuery.fn);
 
    /* Shortcut to new pancake.Speech() */
-   pancake.speech = function () {
+   pancake.speech = function() {
       return new pancake.Speech();
    };
 

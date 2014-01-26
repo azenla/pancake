@@ -1,5 +1,8 @@
 /*global module:false*/
-module.exports = function (grunt) {
+var sources = [
+   "src/pancake.js"
+];
+module.exports = function(grunt) {
 
    // Project configuration.
    grunt.initConfig({
@@ -26,8 +29,8 @@ module.exports = function (grunt) {
          gruntfile: {
             src: 'Gruntfile.js'
          },
-         lib_test: {
-            src: ['src/pancake.js']
+         pancake: {
+            src: sources
          }
       },
       watch: {
@@ -35,28 +38,32 @@ module.exports = function (grunt) {
             files: '<%= jshint.gruntfile.src %>',
             tasks: ['jshint:gruntfile']
          },
-         lib_test: {
-            files: '<%= jshint.lib_test.src %>',
-            tasks: ['jshint:lib_test']
+         pancake: {
+            files: sources,
+            tasks: ['jshint:pancake']
          }
       },
       uglify: {
-         my_target: {
+         pancake: {
             files: {
-               'build/pancake.min.js': ['src/pancake.js']
+               'build/pancake.min.js': sources
             }
          }
+      },
+      qunit: {
+         all: ['tests/**/*.html']
       }
    });
 
    grunt.loadNpmTasks('grunt-contrib-jshint');
    grunt.loadNpmTasks('grunt-contrib-watch');
    grunt.loadNpmTasks('grunt-contrib-uglify');
+   grunt.loadNpmTasks('grunt-contrib-qunit');
 
    // Default task.
-   grunt.registerTask('default', ['jshint', 'uglify']);
+   grunt.registerTask('default', ['jshint', 'qunit', 'uglify']);
 
    // Test task.
-   grunt.registerTask('test', ['jshint']);
+   grunt.registerTask('test', ['jshint', 'qunit']);
 
 };

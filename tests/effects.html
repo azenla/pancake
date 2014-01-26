@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <title>Pancake Time Tests</title>
+   <link rel="stylesheet" href="lib/qunit.css">
+</head>
+
+<body>
+   <table border="1" id="table">
+      <tbody>
+         <tr>
+            <td>Foo</td>
+            <td>Bar</td>
+         </tr>
+      </tbody>
+      </div>
+      <script src="lib/qunit.js"></script>
+      <script src="lib/jquery.js"></script>
+      <script src="../src/pancake.js"></script>
+      <script>
+         var table = $("#table");
+         test("No Exceptions", function () {
+            var e = null;
+            try {
+               table.rotate(360);
+            } catch(exception) {
+               e = exception;
+            }
+            ok(!e, "Passed!");
+         });
+      </script>
+</body>
+
+</html>
