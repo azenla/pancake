@@ -160,8 +160,9 @@
       }
    };
 
-   /* jQuery Integration */
+   /* Begin Syrup Component */
    pancake.applyEffects(window.jQuery.fn);
+   /* End Syrup Component */
 
    /* Shortcut to new pancake.Speech() */
    pancake.speech = function() {
@@ -175,4 +176,7 @@
       audio.play();
       return $(audio);
    };
+   
+   /* Begin Butter Component */
+   /* End Butter Component */
 })(window, "pancake");
