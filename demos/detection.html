@@ -2,25 +2,35 @@
 <html>
   <head>
     <title>Pancake Detection</title>
+
+    <style>
+      div {
+        display: flex;
+        flex-direction: column;
+        line-height: 20px;
+      }
+    </style>
   </head>
   
   <body>
     <h1 style="display: inline-block;">Pancake Detection</h1>
     
-    <div id="browser"></div>
-    <div id="vendor"></div>
+    <div id="info"></div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="../src/pancake.js"></script>
     
     <script>
-        var $browser = $("#browser");
-        var $vendor = $("#vendor");
-        $browser.html(("Browser".bold() + ": " + pancake.browser()).big());
-        $vendor.html(("Vendor".bold() + ": " + pancake.userAgent().vendor).big());
-        $("h1").hover(function() {
-            $(this).rotate(360);
-        });
+        var browser = pancake.browser();
+        var info = $("#info");
+
+        var addInfo = function(key, value) {
+          info.append("<big><b>" + key + "</b>: " + value);
+        };
+
+        addInfo("Name", browser.name);
+        addInfo("Version", browser.version);
+        addInfo("WebKit Version", browser.webkitVersion);
     </script>
   </body>
 </html>

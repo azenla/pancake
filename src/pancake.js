@@ -83,8 +83,7 @@
       var utterance = new window.SpeechSynthesisUtterance(text);
       var keys = Object.keys(options);
       for (var i = 0; i < keys.length; i++) {
-         var key = keys[i];
-         utterance[key] = options[key];
+         utterance[keys[i]] = options[keys[i]];
       }
       window.speechSynthesis.speak(utterance);
    };
@@ -99,14 +98,15 @@
       return {
          agent: agent,
          vendor: navigator.vendor,
-         platform: navigator.platform
+         platform: navigator.platform,
+
       };
    };
 
    /**
     * Different Browsers have different ways to detect information.
     */
-   pancake.browser = function() {
+   pancake.browserName = function() {
       if (navigator.userAgent.indexOf("Chrome/") !== -1 && navigator.vendor.indexOf("Google") !== -1)
          return "Chrome";
       else if (navigator.userAgent.indexOf("Firefox") !== -1)
@@ -117,6 +117,20 @@
          return "Opera";
       else
          return "Unknown";
+   };
+
+   pancake.browser = function() {
+      var info = {
+         name: pancake.browserName(),
+         version: "Unknown"
+      };
+
+      if (info.name === "Chrome") {
+         info.version = navigator.appVersion.match(/Chrome\/(.*?) /)[1];
+         info.webkitVersion = navigator.appVersion.match(/AppleWebKit\/(.*?) /)[1];
+      }
+
+      return info;
    };
 
    /**
