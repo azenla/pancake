@@ -1,8 +1,7 @@
 (function (toApplyTo, name) {
    "use strict";
-   if (!("jQuery" in window)) {
+   if (!("jQuery" in window))
       throw new Error("pancakejs requires jQuery.");
-   }
    var pancake = toApplyTo[name] = {};
 
    pancake.Speech = function () {
@@ -108,17 +107,16 @@
     * Different Browsers have different ways to detect information.
     */
    pancake.browser = function () {
-      if (navigator.userAgent.indexOf("Chrome/") !== -1 && navigator.vendor.indexOf("Google") !== -1) {
+      if (navigator.userAgent.indexOf("Chrome/") !== -1 && navigator.vendor.indexOf("Google") !== -1)
          return "Chrome";
-      } else if (navigator.userAgent.indexOf("Firefox") !== -1) {
+      else if (navigator.userAgent.indexOf("Firefox") !== -1)
          return "Firefox";
-      } else if (navigator.userAgent.indexOf("MSIE") !== -1 || navigator.userAgent.indexOf("Trident") !== -1) {
+      else if (navigator.userAgent.indexOf("MSIE") !== -1 || navigator.userAgent.indexOf("Trident") !== -1)
          return "IE";
-      } else if (navigator.userAgent.indexOf("Opera") !== -1) {
+      else if (navigator.userAgent.indexOf("Opera") !== -1)
          return "Opera";
-      } else {
+      else
          return "Unknown";
-      }
    };
 
    /**
@@ -127,9 +125,8 @@
    pancake.findAll = function (a) {
       var all = [];
       for (var i = 0; i < a.length; i++) {
-         if (a[i]) {
+         if (a[i])
             all.push(a[i]);
-         }
       }
    };
 
