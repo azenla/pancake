@@ -4,6 +4,12 @@
       throw new Error("Pancake requires jQuery.");
    var pancake = toApplyTo[name] = {};
 
+   pancake.getter = function(obj) {
+      return function() {
+         return obj; 
+      };
+   };
+
    pancake.Speech = function() {
       window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
       if (!window.SpeechRecognition)
@@ -18,8 +24,11 @@
       };
 
       var recognition = new window.SpeechRecognition();
+      
       recognition.continuous = true;
-      recognition.interimResults = true;
+      
+      recognition.lang = navigator.language;
+      
       recognition.onresult = function(event) {
          var results = event.results;
          var result = results[0][0].transcript;
@@ -35,10 +44,13 @@
          recognition.onstart = val;
          recognition.start();
       };
+      
       this.stop = function(val) {
          recognition.onstop = val;
          recognition.stop();
       };
+      
+      this.recognizer = pancake.getter(recognition);
    };
 
    /* Effects Access */
@@ -122,14 +134,18 @@
    pancake.browser = function() {
       var info = {
          name: pancake.browserName(),
+         platform: navigator.platform,
+         vendor: navigator.vendor,
          version: "Unknown"
       };
 
       if (info.name === "Chrome") {
          info.version = navigator.appVersion.match(/Chrome\/(.*?) /)[1];
          info.webkitVersion = navigator.appVersion.match(/AppleWebKit\/(.*?) /)[1];
+      } else if (info.name === "Firefox") {
+         info.version = navigator.appVersion.match(/Firefox\/(.*?) /)[1];
       }
-
+      
       return info;
    };
 

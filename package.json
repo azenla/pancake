@@ -2,6 +2,13 @@
    "name": "pancakejs",
    "version": "0.1.1",
    "description": "Pancake JavaScript Utility Library",
+   "homepage": "https://github.com/kaendfinger/pancake/",
+   "private": true,
+   "author": {
+      "name": "Kenneth Endfinger",
+      "email": "kaendfinger@gmail.com",
+      "url": "http://kaendfinger.github.io/"
+   },
    "scripts": {
       "test": "grunt test"
    },
@@ -10,11 +17,13 @@
       "url": "git://github.com/kaendfinger/pancake.git"
    },
    "keywords": [
-      "Pancake",
-      "Utilities"
+      "pancake",
+      "utilities",
+      "jQuery",
+      "speech",
+      "effects"
    ],
-   "author": "Kenneth Endfinger",
-   "license": "BSD",
+   "license": "MIT",
    "bugs": {
       "url": "https://github.com/kaendfinger/pancake/issues"
    },
