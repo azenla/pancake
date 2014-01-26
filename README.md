@@ -1,4 +1,4 @@
-# Pancake
+# Pancake [![Build Status](https://travis-ci.org/kaendfinger/pancake.png)](https://travis-ci.org/kaendfinger/pancake)
 
 Pancake is a JavaScript Utility Library.
 
