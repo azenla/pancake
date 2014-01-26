@@ -17,7 +17,7 @@
     
     <div id="info"></div>
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="jquery.js"></script>
     <script src="../src/pancake.js"></script>
     
     <script>
@@ -30,7 +30,10 @@
 
         addInfo("Name", browser.name);
         addInfo("Version", browser.version);
-        addInfo("WebKit Version", browser.webkitVersion);
+        
+        if (browser.name === "Chrome" || browser.name === "Safari") {
+            addInfo("WebKit Version", browser.webkitVersion);  
+        }
     </script>
   </body>
 </html>

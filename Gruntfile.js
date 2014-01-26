@@ -2,6 +2,7 @@
 var sources = [
    "src/pancake.js"
 ];
+
 module.exports = function(grunt) {
 
    // Project configuration.

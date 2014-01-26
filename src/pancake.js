@@ -1,7 +1,13 @@
 (function(toApplyTo, name) {
    "use strict";
+   
    if (!("jQuery" in window))
       throw new Error("Pancake requires jQuery.");
+      
+   /* Begin Pan Component */
+   /* End Pan Component */
+   
+   /* Begin Batter Component */
    var pancake = toApplyTo[name] = {};
 
    pancake.getter = function(obj) {
@@ -53,38 +59,6 @@
       this.recognizer = pancake.getter(recognition);
    };
 
-   /* Effects Access */
-   pancake.applyEffects = function(obj) {
-      obj.rotate = function(degrees) {
-         var e = $(this);
-         e.css("transition", "all 1s");
-         e.css("transform", "rotateY(" + degrees + "deg)");
-         setTimeout(function() {
-            e.css("transform", "");
-         }, 1000);
-      };
-      obj.tiltDown = function(degrees) {
-         var e = $(this);
-         e.css("transition", "all 1s");
-         e.css("transform", "rotateX(-" + degrees + "deg)");
-         e.data('tilted', !e.data('tilted'));
-      };
-      obj.tiltUp = function(degrees) {
-         var e = $(this);
-         e.css("transition", "all 1s");
-         e.css("transform", "rotateX(" + degrees + "deg)");
-         e.data('tilted', !e.data('tilted'));
-      };
-      obj.tiltToggle = function(degrees) {
-         var e = $(this);
-         if (e.data('tilted')) {
-            e.tiltUp(degrees);
-         } else {
-            e.tiltDown(degrees);
-         }
-      };
-   };
-
    pancake.speak = function(text, options) {
       if (!("speechSynthesis" in window)) {
          throw new Error("Speech Syntehesis not Supported");
@@ -127,23 +101,32 @@
          return "IE";
       else if (navigator.userAgent.indexOf("Opera") !== -1)
          return "Opera";
+      else if (navigator.userAgent.indexOf("Safari") !== -1)
+         return "Safari";
       else
          return "Unknown";
    };
 
-   pancake.browser = function() {
+   /* Pancake Browser Detection */
+   pancake.browser = function(browserName) {
       var info = {
          name: pancake.browserName(),
          platform: navigator.platform,
          vendor: navigator.vendor,
          version: "Unknown"
       };
+      
+      if (browserName)
+         return info.name.toLowerCase() === browserName.toLowerCase();
 
       if (info.name === "Chrome") {
          info.version = navigator.appVersion.match(/Chrome\/(.*?) /)[1];
          info.webkitVersion = navigator.appVersion.match(/AppleWebKit\/(.*?) /)[1];
       } else if (info.name === "Firefox") {
          info.version = navigator.appVersion.match(/Firefox\/(.*?) /)[1];
+      } else if (info.name === "Safari") {
+         info.version = navigator.appVersion.match(/Safari\/(.*?) /)[1];
+         info.webkitVersion = navigator.appVersion.match(/AppleWebKit\/(.*?) /)[1];
       }
       
       return info;
@@ -159,16 +142,22 @@
             all.push(a[i]);
       }
    };
-
-   /* Begin Syrup Component */
-   pancake.applyEffects(window.jQuery.fn);
-   /* End Syrup Component */
-
+   
    /* Shortcut to new pancake.Speech() */
    pancake.speech = function() {
       return new pancake.Speech();
    };
+   
+   /* HTML Import API */
+   pancake.import = function(url) {
+      if (!("import" in document.createElement("link")))
+         throw new Error("HTML Imports not Supported");
+      var link = document.createElement("link");
+      link.rel = "import";
+      link.href = url;
+   };
 
+   /* Play Sound */
    pancake.playAudio = function(url) {
       var audio = new Audio();
       audio.setAttribute("src", url);
@@ -176,6 +165,43 @@
       audio.play();
       return $(audio);
    };
+   /* End Batter Component */
+
+   /* Begin Syrup Component */
+   (function(obj) {
+      obj.rotate = function(degrees) {
+         var e = $(this);
+         e.css("transition", "all 1s");
+         e.css("transform", "rotateY(" + degrees + "deg)");
+         setTimeout(function() {
+            e.css("transform", "");
+         }, 1000);
+      };
+      
+      obj.tiltDown = function(degrees) {
+         var e = $(this);
+         e.css("transition", "all 1s");
+         e.css("transform", "rotateX(-" + degrees + "deg)");
+         e.data('tilted', !e.data('tilted'));
+      };
+      
+      obj.tiltUp = function(degrees) {
+         var e = $(this);
+         e.css("transition", "all 1s");
+         e.css("transform", "rotateX(" + degrees + "deg)");
+         e.data('tilted', !e.data('tilted'));
+      };
+      
+      obj.tiltToggle = function(degrees) {
+         var e = $(this);
+         if (e.data('tilted')) {
+            e.tiltUp(degrees);
+         } else {
+            e.tiltDown(degrees);
+         }
+      };
+   })(window.jQuery.fn);
+   /* End Syrup Component */
    
    /* Begin Butter Component */
    /* End Butter Component */
