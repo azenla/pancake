@@ -1,21 +1,35 @@
-(function(toApplyTo, name) {
+(function(toApplyTo, objName) {
    "use strict";
    
+   /* Check for jQuery in context */
    if (!("jQuery" in window))
       throw new Error("Pancake requires jQuery.");
       
    /* Begin Pan Component */
+   
+   /**
+    * Implementation of String.contains()
+    */
+   String.prototype.contains = function(text) {
+      return this.indexOf(text) !== -1;
+   };
    /* End Pan Component */
    
    /* Begin Batter Component */
-   var pancake = toApplyTo[name] = {};
+   var pancake = toApplyTo[objName] = {};
 
-   pancake.getter = function(obj) {
+   /**
+    * Create a Getter for an Object
+    */
+   pancake.createGetter = function(obj) {
       return function() {
-         return obj; 
+         return obj;
       };
    };
 
+   /**
+    * Speech Recognition Helper
+    */
    pancake.Speech = function() {
       window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
       if (!window.SpeechRecognition)
@@ -56,9 +70,12 @@
          recognition.stop();
       };
       
-      this.recognizer = pancake.getter(recognition);
+      this.recognizer = pancake.createGetter(recognition);
    };
 
+   /**
+    * Speak text using Web Speech API
+    */
    pancake.speak = function(text, options) {
       if (!("speechSynthesis" in window)) {
          throw new Error("Speech Syntehesis not Supported");
@@ -68,21 +85,24 @@
       };
       var utterance = new window.SpeechSynthesisUtterance(text);
       var keys = Object.keys(options);
-      for (var i = 0; i < keys.length; i++) {
+      for (var i = 0; i < keys.length; i++)
          utterance[keys[i]] = options[keys[i]];
-      }
       window.speechSynthesis.speak(utterance);
    };
 
-   /* Get Current Time */
+   /**
+    * Get Current Time
+    */
    pancake.time = function() {
       return new Date().getTime();
    };
 
+   /**
+    * User Agent Information
+    */
    pancake.userAgent = function() {
-      var agent = navigator.userAgent;
       return {
-         agent: agent,
+         agent: navigator.userAgent,
          vendor: navigator.vendor,
          platform: navigator.platform,
 
@@ -90,24 +110,26 @@
    };
 
    /**
-    * Different Browsers have different ways to detect information.
+    * Detect Brower Name using navigator.* APIs
     */
    pancake.browserName = function() {
-      if (navigator.userAgent.indexOf("Chrome/") !== -1 && navigator.vendor.indexOf("Google") !== -1)
+      if (navigator.userAgent.contains("Chrome/") && navigator.vendor.contains("Google"))
          return "Chrome";
-      else if (navigator.userAgent.indexOf("Firefox") !== -1)
+      else if (navigator.userAgent.contains("Firefox"))
          return "Firefox";
-      else if (navigator.userAgent.indexOf("MSIE") !== -1 || navigator.userAgent.indexOf("Trident") !== -1)
+      else if (navigator.userAgent.contains("MSIE") || navigator.userAgent.contains("Trident"))
          return "IE";
-      else if (navigator.userAgent.indexOf("Opera") !== -1)
+      else if (navigator.userAgent.contains("Opera"))
          return "Opera";
-      else if (navigator.userAgent.indexOf("Safari") !== -1)
+      else if (navigator.userAgent.contains("Safari"))
          return "Safari";
       else
          return "Unknown";
    };
 
-   /* Pancake Browser Detection */
+   /**
+    * Pancake Browser Detection
+    */
    pancake.browser = function(browserName) {
       var info = {
          name: pancake.browserName(),
@@ -118,7 +140,7 @@
       
       if (browserName)
          return info.name.toLowerCase() === browserName.toLowerCase();
-
+         
       if (info.name === "Chrome") {
          info.version = navigator.appVersion.match(/Chrome\/(.*?) /)[1];
          info.webkitVersion = navigator.appVersion.match(/AppleWebKit\/(.*?) /)[1];
@@ -143,27 +165,38 @@
       }
    };
    
-   /* Shortcut to new pancake.Speech() */
+   /**
+    * Create a new Speech Accessor
+    */
    pancake.speech = function() {
       return new pancake.Speech();
    };
    
-   /* HTML Import API */
+   /**
+    * HTML Import API
+    */
    pancake.import = function(url) {
       if (!("import" in document.createElement("link")))
          throw new Error("HTML Imports not Supported");
       var link = document.createElement("link");
       link.rel = "import";
       link.href = url;
+      document.head.appendElement(link);
    };
 
-   /* Play Sound */
+   /**
+    * Play Audio Files
+    */
    pancake.playAudio = function(url) {
       var audio = new Audio();
       audio.setAttribute("src", url);
       audio.setAttribute("controls", "");
       audio.play();
       return $(audio);
+   };
+   
+   pancake.createWorker = function(script) {
+      return new Worker(script);
    };
    /* End Batter Component */
 
