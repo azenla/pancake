@@ -2,3 +2,5 @@
 /build/
 *.sublime-*
 .sublime-*
+.idea/
+*.iml
